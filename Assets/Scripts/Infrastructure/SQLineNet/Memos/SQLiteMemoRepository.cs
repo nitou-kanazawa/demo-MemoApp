@@ -16,7 +16,7 @@ namespace Project.Infrastructure.SQLiteNet.Memos {
 
         private readonly ISQLiteConnection _connection;
 
-        private readonly static string FileName = "momos.db";
+        private readonly static string FileName = "memos.db";
         private readonly static string FilePath = Path.Combine(UnityEngine.Application.persistentDataPath, FileName);
 
 
