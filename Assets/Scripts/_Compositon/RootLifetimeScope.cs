@@ -61,8 +61,10 @@ namespace Project.Composition {
             Debug.Log($"Fetched tag: {fetchedTag?.Name}");
 
             // タグの削除
-            await _repository.RemoveAsync(fetchedTag.Id);
-            Debug.Log($"Tag removed: {fetchedTag.Name}");
+            if (fetchedTag != null) {
+                await _repository.RemoveAsync(fetchedTag.Id);
+                Debug.Log($"Tag removed: {fetchedTag.Name}");
+            }
 
             // 全てのタグを取得
             var allTags = (await _repository.GetAllAsync()).ToList();
