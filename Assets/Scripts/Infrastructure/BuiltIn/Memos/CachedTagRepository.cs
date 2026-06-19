@@ -15,6 +15,7 @@ namespace Project.Infrastructure.BuiltIn.Memos {
         
         private readonly ITagRepository _innerRepository;
         private readonly ConcurrentDictionary<TagId, Tag> _cache = new();
+        private bool _isFullyLoaded = false;
 
 
         /// ----------------------------------------------------------------------------
@@ -39,11 +40,13 @@ namespace Project.Infrastructure.BuiltIn.Memos {
         }
 
         async UniTask<IEnumerable<Tag>> ITagRepository.GetAllAsync() {
-            if (!_cache.Any()) {
+            if (!_isFullyLoaded) {
                 var tags = await _innerRepository.GetAllAsync();
+                _cache.Clear();
                 foreach (var tag in tags) {
                     _cache[tag.Id] = tag;
                 }
+                _isFullyLoaded = true;
             }
             return _cache.Values;
         }
